@@ -1,27 +1,26 @@
 # imports:
 import random
-import time
 # Defining them so errors don't appear in the program
-##Otren = None
-##Aspel = None
-##Shaton = None
-##Jaflen = None
-##Esmar = None
-##Guclia = None
-##Ethad = None
-##Deshica = None
-##Kibron = None
-##Root = None
-##Leaf = None
-##Branch = None
-##TheWall = None
-##Ogron = None
-##TheFrostyMountains = None
-##WolfForest = None
-##Oskesh = None
+Otren = None
+Aspel = None
+Shaton = None
+Jaflen = None
+Esmar = None
+Guclia = None
+Ethad = None
+Deshica = None
+Kibron = None
+Root = None
+Leaf = None
+Branch = None
+TheWall = None
+Ogron = None
+TheFrostyMountains = None
+WolfForest = None
+Oskesh = None
 arrowWhich, arrowAmount, shurikenWhich, shurikenAmount, possible, sold_weapons, weapon_prices, sold_armors, armor_prices, attachment_prices, already_taken = None, None, None, None, None, None, None, None, None, None, None
 variables = [arrowWhich, arrowAmount, shurikenWhich, shurikenAmount, possible, sold_weapons, weapon_prices, sold_armors, armor_prices, attachment_prices, already_taken]
-previousLoss = time.time()
+
 #Villages
 Snecor = {
 "Name": "Snecor",
@@ -213,7 +212,7 @@ Items = {
 "PotionSlotLeft": {"Item": None, "Amount": 0},
 "PotionSlotRight": {"Item": None, "Amount": 0},
 "StaffSlotBack": {"Item": None, "Amount": 0},
-"Staff": {"Item": None, "Amount": 0},
+"Staff": {"Spells": None, "Amount": 0},
 "AxeFrogRight": {"Item": None, "Amount": 0},
 "AxeFrogLeft": {"Item": None, "Amount": 0},
 "Armor": BasicClothes.copy()
@@ -221,7 +220,6 @@ Items = {
 Health = 25
 Location = Deshica
 realm = Errevar
-mana = 0
 #Weapons:
 Dagger = {
 "Name": "Dagger",
@@ -361,7 +359,7 @@ Staff = {
 }
 Fireball = {
 "Name": "Fireball",
-"Damage": 1, # 1*Items["Armor"]["Magic"]+mana
+"Damage": 1, # 1*Items["Armor"]["Magic"]
 "Slots": ["Staff"],
 "Speed": 2,
 "Weapon": False,
@@ -373,8 +371,8 @@ Fireball = {
 "Potion": False
 }
 Lightningbolt = {
-"Name": "Lightningbolt",
-"Damage": 1, # 2*Items["Armor"]["Magic"]+mana
+"Name": "Lightning bolt",
+"Damage": 1, # 2*Items["Armor"]["Magic"]
 "Slots": ["Staff"],
 "Speed": 1,
 "Weapon": False,
@@ -658,10 +656,12 @@ def shop(city, Gold, Items, new, variables):
                     Items[purchase["Slots"][i]]["Amount"] = purchase["Stacking"]
             else:
                 Items[purchase["Slots"][i]]["Amount"] = 1
+                if purchase == Staff:
+                    Items["Staff"]["Spells"] = []
         else: # checks if the purchase is armor 
             Items["Armor"] = purchase
-            Fireball["Damage"] = 1*Items["Armor"]["Magic"]+mana # these are temporary and spelldamage get's calculated in the fight.
-            Lightningbolt["Damage"] = 2*Items["Armor"]["Magic"]+mana
+            Fireball["Damage"] = 1*Items["Armor"]["Magic"]
+            Lightningbolt["Damage"] = 2*Items["Armor"]["Magic"]
             DamagePotion["DamagePerInstance"] = 5*round(Items["Armor"]["Magic"]/2)
             RegenerationPotion["DamagePerInstance"] = -1*round(Items["Armor"]["Magic"]/2)
             for i in range(len(list(Items.keys()))):
@@ -671,7 +671,7 @@ def shop(city, Gold, Items, new, variables):
                         Items[list(Items.keys())[i]]["Amount"] = 0
                 elif list(Items.keys())[i] == "Staff":
                     if Items["StaffSlotBack"]["Amount"] == 0:
-                        Items[list(Items.keys())[i]]["Item"] = None
+                        Items[list(Items.keys())[i]]["Spells"] = None
                         Items[list(Items.keys())[i]]["Amount"] = 0 
         more = "None"
         while more.lower() != "no" and more.lower() != "yes":
@@ -691,7 +691,7 @@ def options(Gold, Items):
     first = True
     while action != "1":
         action = None
-        while action != "1" and action != "2" and action != "3" and (action != 4 or location in villages):
+        while action != "1" and action != "2" and action != "3" and (action != "4" or location in villages):
             if location in villages:
                 print("You can: leave for another settlement(1), shop for items(2), or fight monsters on the egde of the village (3)")
             else:
@@ -720,59 +720,8 @@ def options(Gold, Items):
         elif action == "3":
             pass
         elif action == "4":
-            enter = False
-            if Items["StaffSlotBack"] != None:
-                enter = True
-            else:
-                if Gold < 500:
-                    print("In order to learn magic, you need a staff, but it appears you do not have a staff. The academy says that they can sell you one if you get them 500 gold.")
-                elif Staff["Slots"][0] not in Items["Armor"]["WeaponSlots"]:
-                    print("In order to learn magic, you need a staff, but it appears you do not have a staff, however the academy is willing to sell you one for 500 gold. In order to be able to purchase this, you'll need to get an armor type that can support a staff")
-                else:
-                    accept = "None"
-                    while accept.lower() != "yes" and accept.lower() != "no":
-                        print("In order to learn magic, you need a staff, but it appears you do not have a staff, however the academy is willing to sell you one for 500 gold. Do you accept this trade? (yes or no)")
-                        accept = input()
-                    if accept = "yes":
-                        Gold -= 500
-                        Items[Staff["Slots"][0]] = Staff.copy() # not quite sure, but just in case. Also that is what's happening in the lore
-                        enter = True
-                        print("You have bought a Staff for 500 gold. You now have "+str(Gold)+" Gold left")
-            if enter:
-                print("Welcome to the "+location["Name"]+" academy!/n") 
-                print("How this works, is that you can charge up your staff with lightning or fire. You can also try to gain some mana, which make lightning and fire spells do more damage") ## WORKING HERE
-                lightningAmount = random.randint(1, LightningBolt["Stacking"])
-                lightningCost = random.randint(LightningBolt["Price"]-20, LightningBolt["Price"]+20)
-                fireballAmount = random.randint(1, Fireball["Stacking"])
-                fireballCost = random.randint(Fireball["Price"]-20, Fireball["Price"]+20)
-                manaCost = random.randint(40, 60)
-                print("Fire charge ("+str(fireballAmount)+" availble). Cost: "+str(fireballCost)+" per fireball.")
-                print("Lightning charge ("+str(lightningAmount)+" availble)."+str(lightningCost)+" per lightningbolt.")
-                print("Mana boost. (Succsessrate 50%-75%) Cost: "+str(manaCost)+" per attempt.")
-                choice = None
-                while choice != "1" and choice != "2" and choice != "3" and choice != "4":
-                    print("You can leave (1), charge your staff with some fire (2), charge your staff with some lightning (3) or try to boost your mana (4).")
-                    choice = input()
-                if choice == "2":
-                    purchaseAmount = "None"
-                    condition = True
-                    while condition:
-                        print("How many fireballs do you want? (type \"max\" for all of them (or all you can afford), otherwise type a number)")
-                        purchaseAmount = input()
-                        if purchaseAmount.lower() == "max":
-                            if fireballAmount*fireballCost > Gold:
-                                purchaseAmount = str(int(Gold/fireballCost))
-                            else:
-                                purchaseAmount = str(fireballAmount)
-                        if tallifiser(purchaseAmount):
-                            purchaseAmount = int(purchaseAmount)
-                            if purchaseAmount >= 0 and purchaseAmount <= fireballAmount:
-                                condition = False
-                        
-                
-                ## WORKING HERE
-                
-        else: # pretty certain this will come in use later
+            pass
+        else:
             pass
     return Gold, Items, destination
 def settlement(name):
@@ -782,7 +731,38 @@ def settlement(name):
     for i in range(len(villages)):
         if villages[i]["Name"] == name:
             return villages[i]
-# Debug, but likely permanent
+def acadamy(Gold, Items):
+    """
+    This function allows the player to acquire new spells by spending gold. The available spells and their prices are determined by the location of the acadamy.
+    :param Gold: int - The player's current amount of gold.
+    :param Items: list - The player's current inventory of items.
+    :return: tuple - Updated values of Gold and Items.
+    """
+    # List of available spells and their prices
+    spells = {Fireball["Name"]: Fireball["Price"]+random.randint(-10, 10), Lightningbolt["Name"]: Lightningbolt["Price"]+random.randint(-10, 10)}
+    print("Welcome to the acadamy! The following spells are available for purchase:")
+    count = 0
+    for spell, price in spells.items():
+        count += 1
+        print(f"{spell}: {price} gold ({count})")
+    # Ask player which spell they want to purchase
+    spell_choice = "Invalid"
+    while True:
+        if tallifiser(spell_choice):
+            if len(spells.keys()) >= int(spell_choice):
+                break
+        spell_choice = input("Which spell would you like to purchase? ") # FIX THIS PART, NEED TO CONVERT 1 OR 2 INTO THE SPELL NEEDED
+    # Check if spell is available and player has enough gold
+    if spell_choice in range(1, len(spells)) and Gold >= spells[spell_choice]:
+        Gold -= spells[spells.keys()[spell_choice-1]]
+        Items["Staff"]["Spells"].append(spells[spells.keys()[spell_choice]])
+        Items["Staff"]["Amount"] += 1
+        print(f"Successfully purchased {spell_choice} for {spells[spell_choice]} gold.")
+    else:
+        print("Invalid spell choice or not enough gold.")
+    return Gold, Items
+
+#/* Debug, but likely permanent
 def organize(dictionary):
     if type(dictionary) != dict:
         print("Hey, thats not a dictionary!")
@@ -798,26 +778,30 @@ def organize(dictionary):
             if len(list(dictionary.keys())[i]+":"+" "*(longest+1-len(list(dictionary.keys())[i]))+str(dictionary[list(dictionary.keys())[i]])) > 156:
                 print("")
     return
-# Debug
-def tallifiser(tall): # tall er en string 
-  for i in range(len(tall)):
-    if not tall[i] in "1234567890":
-      return False # returnerer False om tall kan ikke gjøres om til en integer uten error
-  return True # returnerer True om tall kan gjøres om til en integer uten error
+#*/ Debug
+def tallifiser(tall):
+    """
+    denne funksjonen returnerer "True" om den kan bli int uten error
+    :param tall: str - tallet som kanskje ikke er et tall
+    :return: bool - om tall kan bli gjort om til int uten error.
+    """
+    for i in range(len(tall)):
+        if not tall[i] in "1234567890":
+            return False
+    return tall != ""
+
 # Starting the program
 location = Deshica
 print("You start at the small village of "+location["Name"])
 print("You have "+str(Gold)+" gold")
 Gold, Items, destination = options(Gold, Items)
 while True:
-    if mana > int(Items["Armor"]["Magic"]/3) and int((time.time()-previousLoss)/60) > 2:
-        previousLoss = time.time()
-        mana -= 1
     destination = settlement(destination)
     location = destination
     print("You are now at "+location["Name"])
     Gold, Items, destination = options(Gold, Items)
-    
+
 # to do:
 # make the acadamy part
-# make changes to the orc cities
+# make the fighting monters part
+# combat
