@@ -1,100 +1,100 @@
 # imports:
 import random
-# Defining them so errors don't appear in the program
-Otren = None
-Aspel = None
-Shaton = None
-Jaflen = None
-Esmar = None
-Guclia = None
-Ethad = None
-Deshica = None
-Kibron = None
-Root = None
-Leaf = None
-Branch = None
-TheWall = None
-Ogron = None
-TheFrostyMountains = None
-WolfForest = None
-Oskesh = None
-#arrowWhich, arrowAmount, shurikenWhich, shurikenAmount, possible, sold_weapons, weapon_prices, sold_armors, armor_prices, attachment_prices, already_taken = None, None, None, None, None, None, None, None, None, None, None
-#shopVariables = [arrowWhich, arrowAmount, shurikenWhich, shurikenAmount, possible, sold_weapons, weapon_prices, sold_armors, armor_prices, attachment_prices, already_taken]
+from time import time
+
 #Villages
 Snecor = {
 "Name": "Snecor",
-"Bordering": ["The Wall", "Kibron"]
+"Bordering": ["The Wall", "Kibron"],
+"shopVariables": [None] * 13 + [False],
 }
 Aspel = {
 "Name": "Aspel",
-"Bordering": ["Otren"]
+"Bordering": ["Otren"],
+"shopVariables": [None] * 13 + [False]
 }
 Shaton = {
 "Name": "Shaton",
-"Bordering": ["Deshica", "Root"]
+"Bordering": ["Deshica", "Root"],
+"shopVariables": [None] * 13 + [False]
 }
 Jaflen = {
 "Name": "Jaflen",
-"Bordering": ["Ethad", "Otren"]
+"Bordering": ["Ethad", "Otren"],
+"shopVariables": [None] * 13 + [False]
 }
 TheFrostyMountains = {
 "Name": "The Frosty Mountains",
-"Bordering": ["Wolf-Forest", "Oskesh"]
+"Bordering": ["Wolf Forest", "Oskesh"],
+"shopVariables": [None] * 13 + [False]
 }
 WolfForest = {
-"Name": "Wolf-Forest",
-"Bordering": ["TheWall", "The Frosty Mountains"]
+"Name": "Wolf Forest",
+"Bordering": ["The Wall", "The Frosty Mountains"],
+"shopVariables": [None] * 13 + [False]
 }
 TheWall = {
 "Name": "The Wall",
-"Bordering": ["Wolf-Forest", "Snecor"]
+"Bordering": ["Wolf Forest", "Snecor"],
+"shopVariables": [None] * 13 + [False]
 }
 Deshica = {
 "Name": "Deshica",
-"Bordering": ["Kibron", "Ethad", "Shaton"]
+"Bordering": ["Kibron", "Ethad", "Shaton"],
+"shopVariables": [None] * 13 + [False]
 }
 villages = [Snecor, Aspel, Shaton, Jaflen, TheFrostyMountains, WolfForest, TheWall, Deshica]
 #Cities:
 Otren = {
 "Name": "Otren",
-"Bordering": ["Aspel", "Jaflen", "Guclia"]
+"Bordering": ["Aspel", "Jaflen", "Guclia"],
+"shopVariables": [None] * 13 + [False]
 }
 Esmar = {
 "Name": "Esmar",
-"Bordering": ["Kibron"]
+"Bordering": ["Kibron"],
+"shopVariables": [None] * 13 + [False]
 }
 Guclia = {
 "Name": "Guclia",
-"Bordering": ["Otren"]
+"Bordering": ["Otren"],
+"shopVariables": [None] * 13 + [False]
 }
 Ethad = {
 "Name": "Ethad",
-"Bordering": ["Kibron", "Jaflen"]
+"Bordering": ["Kibron", "Jaflen"],
+"shopVariables": [None] * 13 + [False]
 }
 
 Kibron = {
 "Name": "Kibron",
-"Bordering": ["Esmar", "Snecor", "Ethad", "Deshica"]
+"Bordering": ["Esmar", "Snecor", "Ethad", "Deshica"],
+"shopVariables": [None] * 13 + [False]
 }
 Root = {
 "Name": "Root",
-"Bordering": ["Branch", "Shaton"]
+"Bordering": ["Branch", "Shaton"],
+"shopVariables": [None] * 13 + [False]
 }
 Leaf = {
 "Name": "Leaf",
-"Bordering": ["Branch"]
+"Bordering": ["Branch"],
+"shopVariables": [None] * 13 + [False]
 }
 Branch = {
 "Name": "Branch",
-"Bordering": ["Root", "Leaf"]
+"Bordering": ["Root", "Leaf"],
+"shopVariables": [None] * 13 + [False]
 }
 Ogron = {
 "Name": "Ogron",
-"Bordering": ["Oskesh"]
+"Bordering": ["Oskesh"],
+"shopVariables": [None] * 13 + [False]
 }
 Oskesh = {
 "Name": "Oskesh",
-"Bordering": ["Ogron", "The Frosty Mountains"]
+"Bordering": ["Ogron", "The Frosty Mountains"],
+"shopVariables": [None] * 13 + [False]
 }
 cities = [Otren, Esmar, Guclia, Ethad, Kibron, Root, Leaf, Branch, Ogron, Oskesh]
 # realms:
@@ -134,7 +134,7 @@ KnightArmor = {
 "Slowness": 5,
 "Protection": 10,
 "Magic": 1,
-"Price": 100,
+"Price": 150,
 "Plural": False
 }
 BarbarianRags = {
@@ -177,8 +177,8 @@ BattleMageArmor = {
 "Name": "BattleMageArmor",
 "WeaponSlots": ["ScabbardSlotLeft", "PotionSlotRight", "BowSlotBack", "QuiverSlotBack", "ShieldSlotBack", "BootLeft", "BootRight"],
 "Slowness": 4,
-"Protection": 8,
-"Magic": 5,
+"Protection": 9,
+"Magic": 4,
 "Price": 150,
 "Plural": False
 }
@@ -191,8 +191,27 @@ ArcherCoat = {
 "Price": 50,
 "Plural": False
 }
+Chainmail = {
+"Name": "Chainmail",
+"WeaponSlots": ["ScabbardSlotLeft", "ShieldSlotBack"],
+"Slowness": 2,
+"Protection": 5,
+"Magic": 1,
+"Price": 100,
+"Plural": False
+}
+PlateArmor = {
+"Name": "PlateArmor",
+"WeaponSlots": ["ScabbardSlotLeft", "ShieldSlotBack"],
+"Slowness": 6,
+"Protection": 12,
+"Magic": 2,
+"Price": 250,
+"Plural": False
+}
+
 #Items:
-Gold = 1000000000 # 100, currently changed for debug purposes
+Gold = 5000 # 100, currently changed for debug purposes
 Items = {
 "MainHand": {"Item": [], "Amount": 0},
 "SecondHand": {"Item": [], "Amount": 0},
@@ -216,7 +235,10 @@ Items = {
 "AxeFrogLeft": {"Item": None, "Amount": 0},
 "Armor": BasicClothes.copy()
 }
-Items = {'MainHand': {'Item': [], 'Amount': 0}, 'SecondHand': {'Item': [], 'Amount': 0}, 'BootLeft': {'Item': None, 'Amount': 0}, 'BootRight': {'Item': None, 'Amount': 0}, 'ScabbardSlotLeft': {'Item': None, 'Amount': 0}, 'ScabbardSlotRight': {'Item': None, 'Amount': 0}, 'ScabbardSlotBackLeft': {'Item': None, 'Amount': 0}, 'ScabbardSlotBackRight': {'Item': None, 'Amount': 0}, 'BowSlotBack': {'Item': None, 'Amount': 0}, 'QuiverSlotBack': {'Item': None, 'Amount': 0}, 'ShieldSlotBack': {'Item': None, 'Amount': 0}, 'ShurikenSlotLeft': {'Item': None, 'Amount': 0}, 'ShurikenSlotRight': {'Item': None, 'Amount': 0}, 'AxeLoopBack': {'Item': None, 'Amount': 0}, 'PotionSlotLeft': {'Item': None, 'Amount': 0}, 'PotionSlotRight': {'Item': {'Name': 'Health Potion', 'Projectile': False, 'Stacking': 3, 'DamagePerInstance': -5, 'Slots': ['PotionSlotRight', 'PotionSlotLeft'], 'Speed': 1, 'TimeLeft': 1, 'Price': 125, 'Packet': False, 'Potion': True}, 'Amount': 2}, 'StaffSlotBack': {'Item': {'Name': 'Staff', 'Damage': 1, 'Slots': ['StaffSlotBack'], 'Speed': 1, 'Weapon': True, 'Projectile': False, 'Stacking': 1, 'Price': 150, 'Packet': False, 'Potion': False}, 'Amount': 1}, 'Staff': {'Spells': [{'Type': {'Name': 'Fireball', 'Damage': 1, 'Slots': ['Staff'], 'Speed': 2, 'Weapon': False, 'Projectile': True, 'Requires': [{'Name': 'Staff', 'Damage': 1, 'Slots': ['StaffSlotBack'], 'Speed': 1, 'Weapon': True, 'Projectile': False, 'Stacking': 1, 'Price': 150, 'Packet': False, 'Potion': False}], 'Stacking': 36, 'Price': 100, 'Packet': False, 'Potion': False}, 'Amount': 0}, {'Type': {'Name': 'Lightning bolt', 'Damage': 2, 'Slots': ['Staff'], 'Speed': 1, 'Weapon': False, 'Projectile': True, 'Requires': [{'Name': 'Staff', 'Damage': 1, 'Slots': ['StaffSlotBack'], 'Speed': 1, 'Weapon': True, 'Projectile': False, 'Stacking': 1, 'Price': 150, 'Packet': False, 'Potion': False}], 'Stacking': 3, 'Price': 150, 'Packet': False, 'Potion': False}, 'Amount': 0}], 'Amount': 0}, 'AxeFrogRight': {'Item': None, 'Amount': 0}, 'AxeFrogLeft': {'Item': None, 'Amount': 0}, 'Armor': {'Name': 'WizardRobes', 'WeaponSlots': ['PotionSlotRight', 'PotionSlotLeft', 'StaffSlotBack'], 'Slowness': 2, 'Protection': 1, 'Magic': 6, 'Price': 65, 'Plural': True}} # debug, remove when finished
+
+# uncomment if you want to start off as a wizard
+#Items = {'MainHand': {'Item': [], 'Amount': 0}, 'SecondHand': {'Item': [], 'Amount': 0}, 'BootLeft': {'Item': None, 'Amount': 0}, 'BootRight': {'Item': None, 'Amount': 0}, 'ScabbardSlotLeft': {'Item': None, 'Amount': 0}, 'ScabbardSlotRight': {'Item': None, 'Amount': 0}, 'ScabbardSlotBackLeft': {'Item': None, 'Amount': 0}, 'ScabbardSlotBackRight': {'Item': None, 'Amount': 0}, 'BowSlotBack': {'Item': None, 'Amount': 0}, 'QuiverSlotBack': {'Item': None, 'Amount': 0}, 'ShieldSlotBack': {'Item': None, 'Amount': 0}, 'ShurikenSlotLeft': {'Item': None, 'Amount': 0}, 'ShurikenSlotRight': {'Item': None, 'Amount': 0}, 'AxeLoopBack': {'Item': None, 'Amount': 0}, 'PotionSlotLeft': {'Item': None, 'Amount': 0}, 'PotionSlotRight': {'Item': {'Name': 'Health Potion', 'Projectile': False, 'Stacking': 3, 'DamagePerInstance': -5, 'Slots': ['PotionSlotRight', 'PotionSlotLeft'], 'Speed': 1, 'TimeLeft': 1, 'Price': 125, 'Packet': False, 'Potion': True}, 'Amount': 2}, 'StaffSlotBack': {'Item': {'Name': 'Staff', 'Damage': 1, 'Slots': ['StaffSlotBack'], 'Speed': 1, 'Weapon': True, 'Projectile': False, 'Stacking': 1, 'Price': 150, 'Packet': False, 'Potion': False}, 'Amount': 1}, 'Staff': [{'Type': {'Name': 'Fireball', 'Damage': 1, 'Slots': ['Staff'], 'Speed': 2, 'Weapon': False, 'Projectile': True, 'Requires': [{'Name': 'Staff', 'Damage': 1, 'Slots': ['StaffSlotBack'], 'Speed': 1, 'Weapon': True, 'Projectile': False, 'Stacking': 1, 'Price': 150, 'Packet': False, 'Potion': False}], 'Stacking': 36, 'Price': 100, 'Packet': False, 'Potion': False}, 'Amount': 0}, {'Type': {'Name': 'Lightning bolt', 'Damage': 2, 'Slots': ['Staff'], 'Speed': 1, 'Weapon': False, 'Projectile': True, 'Requires': [{'Name': 'Staff', 'Damage': 1, 'Slots': ['StaffSlotBack'], 'Speed': 1, 'Weapon': True, 'Projectile': False, 'Stacking': 1, 'Price': 150, 'Packet': False, 'Potion': False}], 'Stacking': 3, 'Price': 150, 'Packet': False, 'Potion': False}, 'Amount': 0}], 'AxeFrogRight': {'Item': None, 'Amount': 0}, 'AxeFrogLeft': {'Item': None, 'Amount': 0}, 'Armor': {'Name': 'WizardRobes', 'WeaponSlots': ['PotionSlotRight', 'PotionSlotLeft', 'StaffSlotBack'], 'Slowness': 2, 'Protection': 1, 'Magic': 6, 'Price': 65, 'Plural': True}} # debug, remove when finished
+
 Health = 25
 Location = Deshica
 realm = Errevar
@@ -462,9 +484,9 @@ AxeFrog = {
 }
 # these decide where you can buy stuff
 VillageWeapons = [Dagger, Bow, Arrow, Hatchet, KnightSword, PoisonPotion]
-VillageArmors = [ArcherCoat, BarbarianRags, KnightArmor]
+VillageArmors = [ArcherCoat, BarbarianRags, KnightArmor, Chainmail]
 CityWeapons = [Ninjato, Bow, Arrow, Shuriken, BattleAxe, Staff, Shortsword, KnightSword, HealthPotion, DamagePotion, PoisonPotion, RegenerationPotion]
-CityArmors = [NinjaGi, MageArmor, WizardRobes, BattleMageArmor, KnightArmor]
+CityArmors = [NinjaGi, MageArmor, WizardRobes, BattleMageArmor, KnightArmor, PlateArmor]
 # defines which ones are attachments
 Attachments = [Scabbard, ScabbardBack, Quiver, AxeLoop, AxeFrog]
 # defines which ones are armors
@@ -626,7 +648,7 @@ def shop(city, Gold, Items, new, shopVariables):
                         purchase = Attachments[int(purchase)-5]
                         break
             else:
-                shopVariables = [arrowWhich, arrowAmount, shurikenWhich, shurikenAmount, possible, sold_weapons, weapon_prices, sold_armors, armor_prices, attachment_prices, already_taken]
+                shopVariables = [arrowWhich, arrowAmount, shurikenWhich, shurikenAmount, possible, sold_weapons, weapon_prices, sold_armors, armor_prices, attachment_prices, already_taken, shopVariables[11], shopVariables[12], False]
                 return Gold, Items, shopVariables # otherwise, it exits the shop function as a whole
             number = purchase
         already_taken.append(number)
@@ -658,7 +680,7 @@ def shop(city, Gold, Items, new, shopVariables):
             else:
                 Items[purchase["Slots"][i]]["Amount"] = 1
                 if purchase == Staff:
-                    Items["Staff"]["Spells"] = [{'Type': {'Name': 'Fireball', 'Damage': 1, 'Slots': ['Staff'], 'Speed': 2, 'Weapon': False, 'Projectile': True, 'Requires': [{'Name': 'Staff', 'Damage': 1, 'Slots': ['StaffSlotBack'], 'Speed': 1, 'Weapon': True, 'Projectile': False, 'Stacking': 1, 'Price': 150, 'Packet': False, 'Potion': False}], 'Stacking': 36, 'Price': 100, 'Packet': False, 'Potion': False}, 'Amount': 0}, {'Type': {'Name': 'Lightning bolt', 'Damage': 2, 'Slots': ['Staff'], 'Speed': 1, 'Weapon': False, 'Projectile': True, 'Requires': [{'Name': 'Staff', 'Damage': 1, 'Slots': ['StaffSlotBack'], 'Speed': 1, 'Weapon': True, 'Projectile': False, 'Stacking': 1, 'Price': 150, 'Packet': False, 'Potion': False}], 'Stacking': 3, 'Price': 150, 'Packet': False, 'Potion': False}, 'Amount': 0}]
+                    Items["Staff"] = [{'Type': {'Name': 'Fireball', 'Damage': 1, 'Slots': ['Staff'], 'Speed': 2, 'Weapon': False, 'Projectile': True, 'Requires': [{'Name': 'Staff', 'Damage': 1, 'Slots': ['StaffSlotBack'], 'Speed': 1, 'Weapon': True, 'Projectile': False, 'Stacking': 1, 'Price': 150, 'Packet': False, 'Potion': False}], 'Stacking': 36, 'Price': 100, 'Packet': False, 'Potion': False}, 'Amount': 0}, {'Type': {'Name': 'Lightning bolt', 'Damage': 2, 'Slots': ['Staff'], 'Speed': 1, 'Weapon': False, 'Projectile': True, 'Requires': [{'Name': 'Staff', 'Damage': 1, 'Slots': ['StaffSlotBack'], 'Speed': 1, 'Weapon': True, 'Projectile': False, 'Stacking': 1, 'Price': 150, 'Packet': False, 'Potion': False}], 'Stacking': 3, 'Price': 150, 'Packet': False, 'Potion': False}, 'Amount': 0}]
         else: # checks if the purchase is armor 
             Items["Armor"] = purchase
             Fireball["Damage"] = 1*Items["Armor"]["Magic"]
@@ -672,8 +694,7 @@ def shop(city, Gold, Items, new, shopVariables):
                         Items[list(Items.keys())[i]]["Amount"] = 0
                 elif list(Items.keys())[i] == "Staff":
                     if Items["StaffSlotBack"]["Amount"] == 0:
-                        Items[list(Items.keys())[i]]["Spells"] = None
-                        Items[list(Items.keys())[i]]["Amount"] = 0 
+                        Items[list(Items.keys())[i]] = None
         more = "None"
         while more.lower() != "no" and more.lower() != "yes":
             print("Anything else? (write \"no\" to exit the shop, or write \"yes\" to make another purchase)")
@@ -683,15 +704,22 @@ def shop(city, Gold, Items, new, shopVariables):
         else:
             done = False
             print("And that is ...?")
-    shopVariables = [arrowWhich, arrowAmount, shurikenWhich, shurikenAmount, possible, sold_weapons, weapon_prices, sold_armors, armor_prices, attachment_prices, already_taken]
+    shopVariables = [arrowWhich, arrowAmount, shurikenWhich, shurikenAmount, possible, sold_weapons, weapon_prices, sold_armors, armor_prices, attachment_prices, already_taken, shopVariables[11], shopVariables[12], False]
     return Gold, Items, shopVariables
 def options(Gold, Items, learnedSpells):
-    arrowWhich, arrowAmount, shurikenWhich, shurikenAmount, possible, sold_weapons, weapon_prices, sold_armors, armor_prices, attachment_prices, already_taken = None, None, None, None, None, None, None, None, None, None, None
-    shopVariables = [arrowWhich, arrowAmount, shurikenWhich, shurikenAmount, possible, sold_weapons, weapon_prices, sold_armors, armor_prices, attachment_prices, already_taken]
-    spellPrices, spellData = None, None
-    academyVariables = [spellPrices, spellData]
+    villageSwaps, citySwaps = 0, 0
+    if (time()-startTime) // 180 > citySwaps:
+        citySwaps = (time()-startTime) // 180
+        for i in cities:
+            i["shopVariables"][13] = True
+            i["shopVariables"][11:13] = [None, None] # this part doesn't need to be done on the village side since villages don't have academies.
+    if (time()-startTime) // 300 > villageSwaps:
+        villageSwaps = (time()-startTime) // 300
+        for i in villages:
+            i["shopVariables"][13] = True
     action = None
-    first = True
+    generate = location["shopVariables"][:13] == [None]*13 or location["shopVariables"][13]
+    
     while action != "1":
         action = None
         while action != "1" and action != "2" and action != "3" and (action != "4" or location in villages):
@@ -707,7 +735,7 @@ def options(Gold, Items, learnedSpells):
             print(str(i+2)+": stay here")
             destination = "None"
             while True:
-                if destination in "123456789" and len(destination) == 1: # make the academy part
+                if destination in "123456789" and len(destination) == 1:
                     if int(destination) < i+3:
                         break
                 destination = input()
@@ -718,12 +746,12 @@ def options(Gold, Items, learnedSpells):
                 print("Ok then ...")
                 action = None
         elif action == "2":
-            Gold, Items, shopVariables = shop(location not in villages, Gold, Items, first, shopVariables)
-            first = False
+            Gold, Items, location["shopVariables"] = shop(location not in villages, Gold, Items, generate, location["shopVariables"])
+            generate = False
         elif action == "3":
             pass
         elif action == "4":
-            Gold, Items, academyVariables, learnedSpells = academy(Gold, Items, academyVariables, learnedSpells) # debug
+            Gold, Items, location["shopVariables"][11:13], learnedSpells = academy(Gold, Items, location["shopVariables"][11:13], learnedSpells) # debug
         else:
             pass
     return Gold, Items, destination, learnedSpells
@@ -734,8 +762,7 @@ def settlement(name):
     for i in villages:
         if i["Name"] == name:
             return i
-def academy(Gold, Items, academyVariables, learnedSpells): # TODO: remove the "Amount" and "Spells" part of the staff, and turn the staff into just the spells part. The amount part is useless.
-    spellPrices, spellData = academyVariables[0], academyVariables[1]
+def academy(Gold, Items, academyVariables, learnedSpells):
     """
     This function allows the player to acquire new spells by infusing them into their staff using gold.
     :param Gold: int - The player's current amount of gold.
@@ -744,7 +771,9 @@ def academy(Gold, Items, academyVariables, learnedSpells): # TODO: remove the "A
     :param learnedSpells: list - List of spells the player has already learned.
     :return: tuple - Updated values of Gold, Items, academyVariables, and learnedSpells.
     """
-    if Items["Staff"]["Spells"] is None:
+    
+    spellPrices, spellData = academyVariables[0], academyVariables[1]
+    if Items["Staff"] is None:
         print("You need a staff to learn spells!")
         return Gold, Items, academyVariables, learnedSpells
 
@@ -752,7 +781,7 @@ def academy(Gold, Items, academyVariables, learnedSpells): # TODO: remove the "A
         spellPrices = {
             Fireball["Name"]: Fireball["Price"] + random.randint(-10, 10),
             Lightningbolt["Name"]: Lightningbolt["Price"] + random.randint(-10, 10)
-        }  # TODO: make the prices stay the same when at the same place
+        }
 
     if spellData is None:
         spellData = {Fireball["Name"]: Fireball, Lightningbolt["Name"]: Lightningbolt}
@@ -780,7 +809,7 @@ def academy(Gold, Items, academyVariables, learnedSpells): # TODO: remove the "A
                     if data not in learnedSpells:
                         available_spells.append(spell)
                 if not available_spells:
-                    print("You have already learned all available spells.")
+                    print("You have already learned all the available spells, so you return to the main hall.")
                     break
 
                 count = 0
@@ -805,11 +834,15 @@ def academy(Gold, Items, academyVariables, learnedSpells): # TODO: remove the "A
                         Gold -= 50
                         learnedSpells.append(spellData[spellChoiceName])
 
-                        for i in Items["Staff"]["Spells"]:
-                            if i["Type"]["Name"] == spellChoiceName:
-                                i["Amount"] += min(Items['Armor']['Magic'], i["Type"]["Stacking"] - i["Amount"])
+                        selected = None
                         
-                        print(f"Successfully learned {spellChoiceName} for 50 gold. Your staff has been infused with {min(Items['Armor']['Magic'], i['Type']['Stacking'] - i['Amount'])} {spellChoiceName}{'s' if Items['Armor']['Magic'] > 1 else ''}. You now have {Gold} gold remaining.") # TODO: this one seems to display the wrong number. Fix.
+                        for i in Items["Staff"]:
+                            if i["Type"]["Name"] == spellChoiceName:
+                                previous = i["Amount"]
+                                i["Amount"] += min(Items['Armor']['Magic'], i["Type"]["Stacking"] - i["Amount"])
+                                selected = i
+                        
+                        print(f"Successfully learned {spellChoiceName} for 50 gold. Your staff has been infused with {min(Items['Armor']['Magic'], selected['Type']['Stacking'] - previous)} {spellChoiceName}{'s' if min(Items['Armor']['Magic'], selected['Type']['Stacking'] - previous) != 1 else ''}. You now have {Gold} gold remaining.")
 
                     elif Gold < 50:
                         print("You don't have enough gold to learn that spell.")
@@ -843,34 +876,24 @@ def academy(Gold, Items, academyVariables, learnedSpells): # TODO: remove the "A
                             continue
 
                         infusionAmount = -1
-                        while infusionAmount < 0 or infusionAmount > min(Gold // spellPrices[spellChoiceName], i["Stacking"] - Items["Staff"]["Spells"][index]["Amount"]):
-                            for index, i in enumerate(spells):
-                                if i["Name"] == spellChoiceName:
-                                    maxPotential = min(Gold // spellPrices[spellChoiceName], i["Stacking"] - Items["Staff"]["Spells"][index]["Amount"])
-                            infusionRequest = input(f"How many of {spellChoiceName} do you want to infuse? (max {maxPotential})")
-                            infusionAmount = -1 if not intConvertable(infusionRequest) else int(infusionRequest)
-                            if not intConvertable(infusionRequest):
+                        for index, i in enumerate(spells):
+                            if i["Name"] == spellChoiceName:
+                                maxPotential = min(Gold // spellPrices[spellChoiceName], i["Stacking"] - Items["Staff"][index]["Amount"])
+                        while infusionAmount < 0 or infusionAmount > maxPotential:
+                            infusionRequest = input(f"How many {spellChoiceName}s do you want to infuse? (max {maxPotential}) ")
+                            if intConvertable(infusionRequest):
+                                infusionAmount = int(infusionRequest)
+                                if infusionAmount > maxPotential:
+                                    print("Invalid response")
+                            else:
                                 print("Invalid response")
+                        
+                        for i in Items["Staff"]:
+                            if i["Type"]["Name"] == spellChoiceName:
+                                i["Amount"] += infusionAmount
+                        Gold -= spellPrices[spellChoiceName] * infusionAmount        
+                        print(f"Successfully infused {infusionAmount} {spellChoiceName}{'s' if infusionAmount != 1 else ''} into your staff for {spellPrices[spellChoiceName] * infusionAmount} gold. You now have {Gold} gold remaining.")
 
-                                done = True # TODO: these are only supposed to happen if you have chosen a correct amount.
-                                break 
-                            
-                        if not done:
-                            
-                            spellFound = False
-                            for i in Items["Staff"]["Spells"]:
-                                if i["Type"]["Name"] == spellChoiceName:
-                                    if i["Amount"]+infusionAmount > i["Type"]["Stacking"]:
-                                        infusionAmount = i["Type"]["Stacking"] - i["Amount"]
-                                        print(f"You can only have a max of {i['Type']['Stacking']} of them infused.")
-                                    i["Amount"] += min(infusionAmount, i['Type']['Stacking']-i["Amount"])
-                                    spellFound = True
-                            #if not spellFound: # TODO: I believe this part can be entirely removed. Just commented out, and will see if I get any errors.
-                            #    Items["Staff"]["Spells"].append({"Type": spellData[spellChoiceName], "Amount": infusionAmount})
-                            #    Items["Staff"]["Amount"] += 1
-                            Gold -= spellPrices[spellChoiceName] * min(infusionAmount, i['Type']['Stacking']-i["Amount"])
-
-                            print(f"Successfully infused {min(infusionAmount, i['Type']['Stacking']-i['Amount'])} of {spellChoiceName} into your staff for {spellPrices[spellChoiceName] * min(infusionAmount, i['Type']['Stacking']-i['Amount'])} gold. You now have {Gold} gold remaining.")
                     elif Gold < spellPrices[spellChoiceName]:
                         print("You don't have enough gold to infuse that spell.")
                     else:
@@ -908,20 +931,62 @@ def intConvertable(stringToCheck):
         if not i in "1234567890":
             return False
     return stringToCheck != ""
+import random
+
+def generate_random_enemy(level): ## Working here:
+    races = ["Goblin", "Orc", "Wolf"]
+    race = random.choice(races)
+
+    armor = {"Name": "Rugged Hide Armor", "WeaponSlots": ["BootLeft", "BootRight"], "Slowness": 1, "Protection": 2, "Magic": 1, "Price": 50, "Plural": False}
+    
+    if level == 1:
+        enemy = {
+            "Race": "Goblin",
+            "Armor": armor,
+            "Items": {"MainHand": {"Item": Dagger, "Amount": 1}}
+        }
+    elif level == 2:
+        enemy = {
+            "Race": "Goblin",
+            "Armor": armor,
+            "Items": {"MainHand": {"Item": Shortsword, "Amount": 1}}
+        }
+    elif level == 3:
+        enemy = {
+            "Race": "Goblin",
+            "Armor": armor,
+            "Items": {"MainHand": {"Item": Bow, "Amount": 1}, "SecondHand": {"Item": Arrow, "Amount": 1}, "Quiver": {"Item": Arrow, "Amount": random.randint(11, 23)}}
+        }
+    elif level == 4:
+        enemy = {
+            "Race": "Orc",
+            "Armor": armor,
+            "Items": {"MainHand": {"Item": SpikedClub, "Amount": 1}}
+        }
+    elif level == 5:
+        enemy = {
+            "Race": "Orc",
+            "Armor": armor,
+            "Items": {"MainHand": {"Item": BattleAxe, "Amount": 1}}
+        }
+    
+    return enemy
+
+# Test the function
+#random_enemy = generate_random_enemy(3)
+#print(random_enemy)
 
 # Starting the program
+startTime = time() # I'll use this later
 location = Deshica
 print("You start at the small village of "+location["Name"])
 print("You have "+str(Gold)+" gold")
-Gold, Items, destination, learnedSpells = options(Gold, Items, learnedSpells)
 while True:
+    Gold, Items, destination, learnedSpells = options(Gold, Items, learnedSpells)
     destination = settlement(destination)
     location = destination
     print("You are now at "+location["Name"])
-    Gold, Items, destination = options(Gold, Items, learnedSpells)
-
+    
 # to do:
-# make the academy part
 # make the fighting monsters part
 # combat
-# have prices and stock in shop and academy be determined by irl time since last visit, instead of going back and fourth
